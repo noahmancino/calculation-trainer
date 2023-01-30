@@ -23,8 +23,10 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**") // TODO: set unprotected endpoints
+                .requestMatchers("/api/v1/auth/**", "/h2-console/**") 
                 .permitAll()
+                .requestMatchers("/error")
+                .anonymous()
                 .anyRequest()
                 .authenticated()
                 .and()

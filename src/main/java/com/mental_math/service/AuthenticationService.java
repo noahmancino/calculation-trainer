@@ -26,7 +26,7 @@ public class AuthenticationService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
         User newUser = new User(username, passwordEncoder.encode(password));
-        userRepository.save(newUser); // TODO: check if field is unique before saving
+        userRepository.save(newUser);
         String jwtToken = jwtService.generateToken(newUser);
         return new AuthenticationResponse(jwtToken);
     }
