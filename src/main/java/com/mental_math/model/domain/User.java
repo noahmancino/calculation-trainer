@@ -1,4 +1,4 @@
-package model.domain;
+package com.mental_math.model.domain;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -11,10 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Document("Users")
+@Document("users")
 @Data
 public class User implements UserDetails {
     @Id
@@ -26,9 +27,9 @@ public class User implements UserDetails {
     @Size(max=30)
     @NotBlank
     private String password;
-    private List<Game> games;
+    private List<Game> games = new ArrayList<>();
 
-    private Role role;
+    private Role role = Role.USER;
 
     public User(String username, String password) {
         this.username = username;

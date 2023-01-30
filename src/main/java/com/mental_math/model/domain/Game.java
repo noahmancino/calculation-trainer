@@ -1,4 +1,4 @@
-package model.domain;
+package com.mental_math.model.domain;
 import org.springframework.beans.factory.parsing.Problem;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package model.domain;
+package com.mental_math.model.domain;
 
 public enum problemType {
     MULTIPLICATION,
