@@ -1,7 +1,7 @@
 package com.mental_math.controller;
 
 import com.mental_math.model.domain.AuthenticationResponse;
-import com.mental_math.service.AuthenticationService;
+import com.mental_math.service.auth.AuthenticationService;
 import com.mental_math.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

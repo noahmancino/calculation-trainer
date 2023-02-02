@@ -1,6 +1,6 @@
 package com.mental_math.config.security;
 
-import com.mental_math.service.JwtService;
+import com.mental_math.service.auth.JwtService;
 import com.mongodb.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.mental_math.service;
+package com.mental_math.service.auth;
 
 import com.mental_math.model.domain.AuthenticationResponse;
 import com.mental_math.repository.UserRepository;
