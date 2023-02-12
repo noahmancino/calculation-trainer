@@ -2,7 +2,7 @@ package com.mental_math.controller;
 
 import com.mental_math.model.domain.AuthenticationResponse;
 import com.mental_math.service.auth.AuthenticationService;
-import com.mental_math.util.Constants;
+import com.mental_math.util.ApplicationConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ public class AuthController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestHeader
             @Pattern(
-                    regexp = Constants.USERNAME_PATTERN,
+                    regexp = ApplicationConstants.USERNAME_PATTERN,
                     message = "Invalid username"
             )
             String username,
             @RequestHeader
             @Pattern(
-                    regexp = Constants.PASSWORD_PATTERN,
+                    regexp = ApplicationConstants.PASSWORD_PATTERN,
                     message = "Invalid password"
             )
             String password
@@ -37,13 +37,13 @@ public class AuthController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestHeader
             @Pattern(
-                    regexp = Constants.USERNAME_PATTERN,
+                    regexp = ApplicationConstants.USERNAME_PATTERN,
                     message = "Invalid username"
             )
             String username,
             @RequestHeader
             @Pattern(
-                    regexp = Constants.PASSWORD_PATTERN,
+                    regexp = ApplicationConstants.PASSWORD_PATTERN,
                     message = "Invalid password"
             )
             String password

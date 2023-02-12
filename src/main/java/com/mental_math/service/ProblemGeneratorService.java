@@ -1,7 +1,8 @@
 package com.mental_math.service;
 
 import com.mental_math.model.BinaryIntegerOperation;
-import com.mental_math.util.Constants;
+import com.mental_math.util.GameConstants;
+import com.mental_math.util.GameConstants.Difficulty;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,42 +17,46 @@ import java.util.function.BiFunction;
 public class ProblemGeneratorService {
 
     /**
-     * @param maxNum Largest possible generated value for op1 and op2
+     * @param level difficulty of problems
      * @param numOfProblems Size of generated list
      * @return A random list of BinaryIntegerOperations where op1 + op2 = result.
      */
-    public List<BinaryIntegerOperation> generateAdditionProblems(int maxNum, int numOfProblems) {
+    public List<BinaryIntegerOperation> generateAdditionProblems(String level, int numOfProblems) {
+        int maxNum = mapBinaryIntegerProblemLevel(level);
         validateBinaryIntegerProblems(maxNum, numOfProblems);
         return generateBinaryIntegerProblems(maxNum, numOfProblems, (a, b) -> a + b);
     }
 
     /**
-     * @param maxNum Largest possible generated value for op1 and op2
+     * @param level difficulty of problems
      * @param numOfProblems Size of generated list
      * @return A random list of BinaryIntegerOperations where op1 - op2 = result.
      */
-    public List<BinaryIntegerOperation> generateSubtractionProblems(int maxNum, int numOfProblems) {
+    public List<BinaryIntegerOperation> generateSubtractionProblems(String level, int numOfProblems) {
+        int maxNum = mapBinaryIntegerProblemLevel(level);
         validateBinaryIntegerProblems(maxNum, numOfProblems);
         return generateBinaryIntegerProblems(maxNum, numOfProblems, (a, b) -> a - b);
     }
 
     /**
-     * @param maxNum Largest possible generated value for op1 and op2
+     * @param level difficulty of problems
      * @param numOfProblems Size of generated list
      * @return A random list of BinaryIntegerOperations where op1 * op2 = result.
      */
-    public List<BinaryIntegerOperation> generateMultiplicationProblems(int maxNum, int numOfProblems) {
+    public List<BinaryIntegerOperation> generateMultiplicationProblems(String level, int numOfProblems) {
+        int maxNum = mapBinaryIntegerProblemLevel(level);
         validateBinaryIntegerProblems(maxNum, numOfProblems);
         return generateBinaryIntegerProblems(maxNum, numOfProblems, (a, b) -> a * b);
     }
 
     /**
      * This has to have its own implementation in order to guarantee the result is an integer
-     * @param maxNum Largest possible generated value for op1 and op2
+     * @param level difficulty of problems
      * @param numOfProblems Size of generated list
      * @return A random list of BinaryIntegerOperations where op1 / op2 = result.
      */
-    public List<BinaryIntegerOperation> generateDivisionProblems(int maxNum, int numOfProblems) {
+    public List<BinaryIntegerOperation> generateDivisionProblems(String level, int numOfProblems) {
+        int maxNum = mapBinaryIntegerProblemLevel(level);
         validateBinaryIntegerProblems(maxNum, numOfProblems);
         List<BinaryIntegerOperation> divisionProblems = new ArrayList<>();
         for (int i = 0; i < numOfProblems; i++) {
@@ -94,15 +99,37 @@ public class ProblemGeneratorService {
     to all binary integer operations.
      */
     private static void validateBinaryIntegerProblems(int maxNum, int numOfProblems) {
-        boolean isMaxNumValid = 0 < maxNum && maxNum < Constants.MAX_PROBLEM_OPERAND_INTEGER;
+        boolean isMaxNumValid = 0 < maxNum && maxNum < GameConstants.MAX_PROBLEM_OPERAND_INTEGER;
         boolean isNumOfProblemsValid =
-                Constants.MIN_GENERATED_PROBLEMS <= numOfProblems && numOfProblems <= Constants.MAX_GENERATED_PROBLEMS;
+                GameConstants.MIN_GENERATED_PROBLEMS <= numOfProblems && numOfProblems <= GameConstants.MAX_GENERATED_PROBLEMS;
         if (!isNumOfProblemsValid) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Too few or too many problems to be generated");
         }
         if (!isMaxNumValid) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Maximum operand size non-positive or too large.");
         }
+    }
+
+    /**
+     * @param level of difficulty for problem
+     * @return largest possible operand value for problem
+     */
+    private int mapBinaryIntegerProblemLevel(String level) {
+        Difficulty difficulty;
+        try {
+            difficulty = Difficulty.valueOf(level);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid difficulty");
+        }
+
+        return switch (difficulty) {
+            case BEGINNER -> 10;
+            case EASY -> 20;
+            case NORMAL -> 50;
+            case HARD -> 100;
+            case VERY_HARD -> 500;
+            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Problem difficulty should be 1-5");
+        };
     }
 
 

@@ -7,7 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import com.mental_math.util.Constants;
+import com.mental_math.util.ApplicationConstants;
 
 import java.security.Key;
 import java.util.Date;
@@ -37,7 +37,7 @@ public class JwtService {
                 setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + Constants.JWT_EXPIRATION_MILLIS))
+                .setExpiration(new Date(System.currentTimeMillis() + ApplicationConstants.JWT_EXPIRATION_MILLIS))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

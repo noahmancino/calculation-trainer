@@ -1,6 +1,7 @@
 package com.mental_math.controller;
 
 import com.mental_math.model.BinaryIntegerOperation;
+
 import com.mental_math.service.ProblemGeneratorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,39 +21,39 @@ public class ProblemGeneratorController {
     @GetMapping("/integer/addition")
     public ResponseEntity<List<BinaryIntegerOperation>> getAdditionProblems(
             @RequestHeader
-            int maxNum,
+            String level,
             @RequestHeader
             int numOfProblems
     ) {
-        return ResponseEntity.ok(problemGeneratorService.generateAdditionProblems(maxNum, numOfProblems));
+        return ResponseEntity.ok(problemGeneratorService.generateAdditionProblems(level, numOfProblems));
     }
 
     @GetMapping("/integer/subtraction")
     public ResponseEntity<List<BinaryIntegerOperation>> getSubtractionProblems(
             @RequestHeader
-            int maxNum,
+            String level,
             @RequestHeader
             int numOfProblems
     ) {
-        return ResponseEntity.ok(problemGeneratorService.generateSubtractionProblems(maxNum, numOfProblems));
+        return ResponseEntity.ok(problemGeneratorService.generateSubtractionProblems(level, numOfProblems));
     }
     @GetMapping("/integer/multiplication")
     public ResponseEntity<List<BinaryIntegerOperation>> getMultiplicationProblems(
             @RequestHeader
-            int maxNum,
+            String level,
             @RequestHeader
             int numOfProblems
     ) {
-        return ResponseEntity.ok(problemGeneratorService.generateMultiplicationProblems(maxNum, numOfProblems));
+        return ResponseEntity.ok(problemGeneratorService.generateMultiplicationProblems(level, numOfProblems));
     }
 
     @GetMapping("/integer/division")
     public ResponseEntity<List<BinaryIntegerOperation>> getDivisionProblems(
             @RequestHeader
-            int maxNum,
+            String level,
             @RequestHeader
             int numOfProblems
     ) {
-        return ResponseEntity.ok(problemGeneratorService.generateDivisionProblems(maxNum, numOfProblems));
+        return ResponseEntity.ok(problemGeneratorService.generateDivisionProblems(level, numOfProblems));
     }
 }

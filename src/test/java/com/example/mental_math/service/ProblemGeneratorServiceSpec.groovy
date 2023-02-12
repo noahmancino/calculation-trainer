@@ -1,74 +1,86 @@
 package com.example.mental_math.service
 
+import com.mental_math.util.GameConstants
 import org.springframework.web.server.ResponseStatusException
+import com.mental_math.util.GameConstants.Difficulty;
 import spock.lang.Specification
 import com.mental_math.service.ProblemGeneratorService
 
 // TODO: implement verifyBinOpResults test
 class ProblemGeneratorServiceSpec extends Specification {
+    ProblemGeneratorService problemGeneratorService;
+
+    def setup() {
+        problemGeneratorService = new ProblemGeneratorService();
+    }
+
     def "generateAdditionProblems | valid input | valid response"() {
         when:
-        def result = ProblemGeneratorService.generateAdditionProblems(maxNum, numOfProbs)
+        def result = problemGeneratorService.generateAdditionProblems(level, numOfProbs)
 
         then:
         ProblemGeneratorService.verifyBinOpResults(result, Integer::sum)
 
         where:
-        maxNum | numOfProbs
-        1   | 1
-        25  | 10
-        10  | 10
-        40  | 50
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | 1
+        Difficulty.EASY.toString()       | 10
+        Difficulty.NORMAL.toString()     | 10
+        Difficulty.HARD.toString()       | 50
+        Difficulty.VERY_HARD.toString()  | 10
     }
 
     def "generateSubtractionProblems | valid input | valid response"() {
         when:
-        def result = ProblemGeneratorService.generateSubtractionProblems(maxNum, numOfProbs)
+        def result = problemGeneratorService.generateSubtractionProblems(level, numOfProbs)
 
         then:
         ProblemGeneratorService.verifyBinOpResults(result, (a, b) -> a - b)
 
         where:
-        maxNum | numOfProbs
-        1   | 1
-        25  | 10
-        10  | 10
-        40  | 50
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | 1
+        Difficulty.EASY.toString()       | 10
+        Difficulty.NORMAL.toString()     | 10
+        Difficulty.HARD.toString()       | 50
+        Difficulty.VERY_HARD.toString()  | 10
     }
 
     def "generateMultiplicationProblems | valid input | valid response"() {
         when:
-        def result = ProblemGeneratorService.generateMultiplicationProblems(maxNum, numOfProbs)
+        def result = problemGeneratorService.generateMultiplicationProblems(level, numOfProbs)
 
         then:
         ProblemGeneratorService.verifyBinOpResults(result, (a, b) -> a * b)
 
         where:
-        maxNum | numOfProbs
-        1   | 1
-        25  | 10
-        10  | 10
-        40  | 50
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | 1
+        Difficulty.EASY.toString()       | 10
+        Difficulty.NORMAL.toString()     | 10
+        Difficulty.HARD.toString()       | 50
+        Difficulty.VERY_HARD.toString()  | 10
     }
 
     def "generateDivisionProblems | valid input | valid response"() {
         when:
-        def result = ProblemGeneratorService.generateDivisionProblems(maxNum, numOfProbs)
+        def result = problemGeneratorService.generateDivisionProblems(level, numOfProbs)
 
         then:
         ProblemGeneratorService.verifyBinOpResults(result, (a, b) -> (a / b).intValue())
 
         where:
-        maxNum | numOfProbs
-        1   | 1
-        25  | 10
-        10  | 10
-        40  | 50
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | 1
+        Difficulty.EASY.toString()       | 10
+        Difficulty.NORMAL.toString()     | 10
+        Difficulty.HARD.toString()       | 50
+        Difficulty.VERY_HARD.toString()  | 10
     }
 
-    def "generateAdditionProblem | invalid input | throws ResponseStatusException"() {
+    def "generateAdditionProblems | invalid input | throws ResponseStatusException"() {
             when:
-            def result = ProblemGeneratorService.generateAdditionProblems(maxNum, numOfProbs)
+            def result = problemGeneratorService.generateAdditionProblems(level, numOfProbs)
 
             then:
             def exception = thrown(ResponseStatusException);
@@ -76,12 +88,31 @@ class ProblemGeneratorServiceSpec extends Specification {
             and:
             exception.getMessage() != null
 
-            where:
-            maxNum | numOfProbs
-            0   | 0
-            0   | 10
-            (int) Math.pow(2, 15) + 1  | 10
-            10  | 0
-            10 | 51
+        where:
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | GameConstants.MAX_GENERATED_PROBLEMS + 1
+        Difficulty.EASY.toString()       | GameConstants.MIN_GENERATED_PROBLEMS - 1
+        "easy"                           | GameConstants.MIN_GENERATED_PROBLEMS - 1
+        ""                               | 50
+        "Ferocius"                       | 10
+    }
+
+    def "generateDivisionProblems | invalid input | throws ResponseStatusException"() {
+        when:
+        def result = problemGeneratorService.generateDivisionProblems(level, numOfProbs)
+
+        then:
+        def exception = thrown(ResponseStatusException);
+
+        and:
+        exception.getMessage() != null
+
+        where:
+        level                            | numOfProbs
+        Difficulty.BEGINNER.toString()   | GameConstants.MAX_GENERATED_PROBLEMS + 1
+        Difficulty.EASY.toString()       | GameConstants.MIN_GENERATED_PROBLEMS - 1
+        "easy"                           | GameConstants.MIN_GENERATED_PROBLEMS - 1
+        ""                               | 50
+        "Ferocius"                       | 10
     }
 }
