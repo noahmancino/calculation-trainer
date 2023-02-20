@@ -16,6 +16,7 @@ public class GameStorageService {
      * @param game the game
      */
     public void storeGame(String username, Game game) {
-        userDAO.saveGame(username, game);
+
+        System.out.println(userDAO.saveGame(username, game));
     }
 }
