@@ -1,5 +1,6 @@
 package com.mental_math.model.domain;
 
+import com.mental_math.util.ApplicationConstants;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,13 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Document("users")
+@Document(ApplicationConstants.COLLECTION_NAME)
 @Data
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
     @Id
     private String id;
     @Size(max=20)

@@ -11,4 +11,8 @@ public class ApplicationConstants {
 
     // Magic numbers
     public static final int JWT_EXPIRATION_MILLIS = 1000 * 60 * 60 * 12;
+
+    // DB related strings
+    public static final String GAME_NAME = "games";
+    public static final String COLLECTION_NAME = "users";
 }

@@ -1,7 +1,7 @@
 package com.mental_math.model.domain;
+import com.mental_math.util.ApplicationConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Game implements Serializable {
-    @NotNull(message = "Missing required field finishTime.")
+    @NotNull(message = "Missing required field finshTime.")
     private Date finishTime;
     @NotNull(message = "Missing required field score.")
     private List<Integer> score;

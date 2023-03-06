@@ -128,7 +128,6 @@ public class ProblemGeneratorService {
             case NORMAL -> 50;
             case HARD -> 100;
             case VERY_HARD -> 500;
-            default -> throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Problem difficulty should be 1-5");
         };
     }
 

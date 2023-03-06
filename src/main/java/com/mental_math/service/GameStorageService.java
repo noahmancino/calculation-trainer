@@ -21,12 +21,17 @@ public class GameStorageService {
     /**
      * Stores game and associates it with username
      * @param username name of user who played the game
-     * @param game the game
+     * @param game game to be saved
      */
     public void storeGame(String username, Game game) {
         userDAO.saveGame(username, game);
     }
 
+    /**
+     * Retreives all games associated with user
+     * @param username name of user
+     * @return list of all past games played by user
+     */
     public List<Game> getGames(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No games for this user");
